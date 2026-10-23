@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Diabetes Risk Classification System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <!-- Hero Section -->
+        <div class="custom-card text-center py-5 px-4 mb-4">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-3">
+                <i class="bi bi-heart-pulse me-1"></i> Health Assessment Tool
+            </span>
+            <h1 class="display-6 fw-bold text-dark mb-3">
+                Diabetes Risk Classification System
+            </h1>
+            <p class="lead text-muted mx-auto mb-4" style="max-width: 650px; font-size: 1.05rem; line-height: 1.6;">
+                Check your potential diabetes risk in less than a minute. Enter a few simple health indicators to receive an instant, easy-to-understand risk evaluation.
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                {% if session.get('user_id') %}
+                    <a href="{{ url_for('predict_page') }}" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-activity me-2"></i> Check Risk
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-arrow-right-circle-fill me-2"></i> Get Started
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 3 Simple Steps -->
+        <div class="mb-4">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark">How It Works</h3>
+                <p class="text-muted small">Three simple steps to assess your diabetes risk</p>
+            </div>
+
+            <div class="row g-3">
+                <!-- Step 1: Enter Details -->
+                <div class="col-md-4">
+                    <div class="custom-card h-100 text-center p-4">
+                        <div class="stat-icon stat-icon-blue mx-auto mb-3">
+                            <i class="bi bi-pencil-square"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">1. Enter Details</h5>
+                        <p class="text-muted small mb-0">
+                            Enter basic health metrics like age, blood sugar, blood pressure, and BMI.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2: View Result -->
+                <div class="col-md-4">
+                    <div class="custom-card h-100 text-center p-4">
+                        <div class="stat-icon stat-icon-green mx-auto mb-3">
+                            <i class="bi bi-clipboard2-check"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">2. View Result</h5>
+                        <p class="text-muted small mb-0">
+                            Receive an instant and clear risk flag indicating either lower risk or higher risk.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3: Check History -->
+                <div class="col-md-4">
+                    <div class="custom-card h-100 text-center p-4">
+                        <div class="stat-icon stat-icon-purple mx-auto mb-3">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">3. Check History</h5>
+                        <p class="text-muted small mb-0">
+                            Review your past assessments anytime in a neat, organized history log.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Small Educational Disclaimer -->
+        <div class="disclaimer-banner">
+            <i class="bi bi-info-circle-fill fs-5 flex-shrink-0"></i>
+            <div>
+                <strong>Educational Disclaimer:</strong> This system is designed for educational and awareness purposes only. It does not provide a medical diagnosis. For medical advice, diagnosis, or treatment, please consult a qualified healthcare professional.
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

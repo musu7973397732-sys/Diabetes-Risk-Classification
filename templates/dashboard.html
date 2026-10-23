@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Diabetes Risk Classification System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <!-- Welcome Banner -->
+        <div class="custom-card mb-4 bg-white border">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div>
+                    <h2 class="card-title display-6 fw-bold mb-1">
+                        Welcome, {{ user_name }}!
+                    </h2>
+                    <p class="card-subtitle mb-0">
+                        Here is a summary of your diabetes risk assessments.
+                    </p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="{{ url_for('predict_page') }}" class="btn btn-primary px-3 shadow-sm">
+                        <i class="bi bi-activity me-1"></i> Check Risk
+                    </a>
+                    <a href="{{ url_for('history_page') }}" class="btn btn-outline-secondary px-3">
+                        <i class="bi bi-clock-history me-1"></i> View History
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Card -->
+        <div class="row g-3 mb-4">
+            <!-- Total Predictions Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-blue">
+                        <i class="bi bi-clipboard2-pulse-fill"></i>
+                    </div>
+                    <div>
+                        <div class="stat-number">{{ prediction_count }}</div>
+                        <div class="stat-label">Total Predictions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Card: Check Risk -->
+            <div class="col-md-6 col-lg-4">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-green">
+                        <i class="bi bi-plus-circle-fill"></i>
+                    </div>
+                    <div>
+                        <div class="stat-number" style="font-size: 1.25rem;">New Assessment</div>
+                        <a href="{{ url_for('predict_page') }}" class="small fw-bold text-decoration-none text-primary">
+                            Check Risk Now &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Card: View History -->
+            <div class="col-md-6 col-lg-4">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-purple">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div>
+                        <div class="stat-number" style="font-size: 1.25rem;">Past Records</div>
+                        <a href="{{ url_for('history_page') }}" class="small fw-bold text-decoration-none text-primary">
+                            View All History &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Predictions Section -->
+        <div class="custom-card">
+            <div class="d-flex align-items-center justify-content-between card-header-clean">
+                <div>
+                    <h3 class="card-title" style="font-size: 1.15rem;">
+                        <i class="bi bi-clock-history text-primary me-2"></i> Recent Predictions
+                    </h3>
+                    <p class="card-subtitle">Your latest risk assessment results</p>
+                </div>
+                {% if history %}
+                    <a href="{{ url_for('history_page') }}" class="btn btn-outline-secondary btn-sm">
+                        View All History
+                    </a>
+                {% endif %}
+            </div>
+
+            {% if history %}
+                <div class="table-responsive">
+                    <table class="table table-custom align-middle">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Glucose</th>
+                                <th>BMI</th>
+                                <th>Age</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in history %}
+                            <tr>
+                                <td class="text-muted small">{{ item.created_at }}</td>
+                                <td><strong>{{ item.glucose }}</strong> mg/dL</td>
+                                <td>{{ item.bmi }}</td>
+                                <td>{{ item.age }} years</td>
+                                <td>
+                                    {% if item.predicted_outcome == 1 %}
+                                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger px-2 py-1 rounded-pill">
+                                            <i class="bi bi-exclamation-triangle-fill me-1"></i> Higher Risk Flag
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-success bg-opacity-10 text-success border border-success px-2 py-1 rounded-pill">
+                                            <i class="bi bi-check-circle-fill me-1"></i> Lower Risk Flag
+                                        </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state-box">
+                    <i class="bi bi-clipboard2-x empty-state-icon"></i>
+                    <h5 class="fw-bold text-dark">No Predictions Recorded Yet</h5>
+                    <p class="small text-muted mb-3">You haven't run any diabetes risk assessments yet.</p>
+                    <a href="{{ url_for('predict_page') }}" class="btn btn-primary btn-sm px-4">
+                        <i class="bi bi-activity me-1"></i> Check Risk
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

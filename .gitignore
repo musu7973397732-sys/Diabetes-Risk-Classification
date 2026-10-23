@@ -1,0 +1,33 @@
+# Python byte-code and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+ENV/
+.venv/
+
+# Environment and sensitive credential files
+.env
+.env.local
+*.env
+
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.vscode/
+
+# SQLite local databases
+*.sqlite3
+*.db
+
+# VS Code and editor directories
+.vscode/
+.idea/
+
+# Distribution and packaging
+dist/
+build/
+*.egg-info/
